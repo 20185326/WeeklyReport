@@ -24,7 +24,7 @@ export const handleDynamicChange = (section, index, field, value, formData, setF
 
 
 export const handleSubmit = async (formData) => {
-  const { recipient, studentName, subject, date, grade, performanceScale, kpaPride, accommodations, comments } = formData;
+  const {from,week, family, studentName, subject, date, grade, performanceScale, kpaPride, accommodations, comments } = formData;
 
   // Construir HTML del mensaje
   const performanceList = performanceScale.map(
@@ -53,8 +53,8 @@ export const handleSubmit = async (formData) => {
           <img src="https://drive.google.com/uc?export=view&id=1FQEesRZV2NsM4DAiqmPIQWYrdSySCBHv" alt="KPAA Logo" style="max-width: 200px; height: auto;">
         </div>
 
-        <h2 style="color: #363661;">Dear ${recipient}</h2>
-        <p>Please find below the weekly report (${date}) for ${studentName}. Should you have any questions or concerns, please let us know at andre.zambrano@pucp.edu.pe. Thank you and have a blessed weekend.</p>
+        <h2 style="color: #363661;">Dear ${family}</h2>
+        <p>Please find below the weekly report (${week} - ${date}) for ${studentName}. Should you have any questions or concerns, please let us know at ${from} Thank you and have a blessed weekend.</p>
         <hr style="border: 1px solid #363661;">
 
         ${studentName ? `
@@ -108,10 +108,10 @@ export const handleSubmit = async (formData) => {
 
   try {
     const response = await sendReport(formData,mensaje);
-    console.log('Respuesta del servidor:', response);
+    return response
     // Aquí podrías agregar alguna lógica adicional, como mostrar un mensaje de éxito
   } catch (error) {
-    console.error('Error al enviar el formulario:', error);
+    return error
     // Aquí podrías manejar el error, como mostrar un mensaje al usuario
   }
 };

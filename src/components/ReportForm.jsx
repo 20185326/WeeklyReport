@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import FormInput from './FormInput';
 import DynamicSection from './DynamicSection';
 import { addRow, handleChange, handleDynamicChange, handleSubmit } from '../utils/formHandlers';
-import { Circles } from 'react-loader-spinner'; // Componente de carga
+import { Oval } from 'react-loader-spinner'; // Componente de carga
 import Modal from 'react-modal'; // Modal de confirmación
 
 Modal.setAppElement('#root'); // Necesario para accesibilidad de react-modal
 
 const ReportForm = () => {
   const [formData, setFormData] = useState({
+    from: '',
     recipient: '',
     family: '',
     studentName: '',
@@ -24,6 +25,7 @@ const ReportForm = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isError, setIsError] = useState(false);  
   const [isFormValid, setIsFormValid] = useState(false);
 
   const handleFormChange = (e) => {
@@ -46,11 +48,21 @@ const ReportForm = () => {
   };
 
   const handleFormSubmit = async () => {
-    setIsLoading(true); // Mostrar el modal de carga
-    await handleSubmit(formData); // Esperar a que el envío se complete
-    setIsLoading(false); // Ocultar el modal de carga
-    setIsSubmitted(true); // Mostrar el modal de confirmación
+    setIsLoading(true);
+    const response = await handleSubmit(formData);
+    setIsLoading(false);
+  
+    // Verifica si response es un objeto válido y tiene statusCode
+    if (response && response.statusCode === 200) {
+      setIsError(false);
+      setIsSubmitted(true);
+    } else {
+      setIsError(true);
+      setIsSubmitted(true);
+    }
   };
+  
+
 
   const closeConfirmationModal = () => {
     setIsSubmitted(false); // Cerrar el modal de confirmación
@@ -58,6 +70,7 @@ const ReportForm = () => {
 
   const validateForm = () => {
     const areMainFieldsFilled =
+      formData.from &&
       formData.recipient &&
       formData.family &&
       formData.studentName &&
@@ -93,6 +106,16 @@ const ReportForm = () => {
         {/* Compact Fields */}
         <div className="grid grid-cols-3 gap-4">
           <FormInput 
+            label="From:" 
+            type="text" 
+            name="from" 
+            value={formData.from} 
+            onChange={handleFormChange} 
+            className="w-full" 
+            placeholder="e.g., user.name@keypoint.academy.com" 
+            style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
+          />  
+          <FormInput 
             label="Recipient:" 
             type="text" 
             name="recipient" 
@@ -102,6 +125,18 @@ const ReportForm = () => {
             placeholder="e.g., Flores.Mora@gmail.com" 
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />  
+          <FormInput 
+            label="Subject:" 
+            type="text" 
+            name="subject" 
+            value={formData.subject}
+            onChange={handleFormChange} 
+            className="w-full" 
+            placeholder="e.g., ESL | Excelling" 
+            style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
+          />
+        </div>
+        <div className="grid grid-cols-5 gap-4">
           <FormInput 
             label="Family:" 
             type="text" 
@@ -122,18 +157,6 @@ const ReportForm = () => {
             placeholder="e.g., Pablo Francisco Flores Mora" 
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />
-        </div>
-        <div className="grid grid-cols-4 gap-4">
-          <FormInput 
-            label="Subject:" 
-            type="text" 
-            name="subject" 
-            value={formData.subject}
-            onChange={handleFormChange} 
-            className="w-full" 
-            placeholder="e.g., ESL | Excelling" 
-            style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
-          />
           <FormInput 
             label="Week:" 
             type="text" 
@@ -141,7 +164,9 @@ const ReportForm = () => {
             value={formData.week}
             onChange={handleFormChange} 
             className="w-full" 
-            placeholder="e.g., 6 week" 
+            options={['week 1', 'week 2', 'week 3', 'week 4', 'week 5',
+              'week 6', 'week 7', 'week 8', 'week 9', 'week 10', 'week 11',
+              'week 12','week 13','week 14','week 15','week 16','week 17']} // Add your options here
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />
           <FormInput 
@@ -159,7 +184,16 @@ const ReportForm = () => {
             name="grade" 
             value={formData.grade}
             onChange={handleFormChange} 
-            placeholder="e.g. 2nd" 
+            options={[
+              'Toddler', 
+              'Pre-Kindergarten', 
+              'Kindergarten', 
+              '1st Grade', 
+              '2nd Grade', 
+              '3rd Grade', 
+              '4th Grade', 
+              '5th Grade'
+            ]}
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />
         </div>
@@ -229,27 +263,33 @@ const ReportForm = () => {
       {/* Modal de Carga */}
       {isLoading && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-          <Circles height="100" width="100" color="#4fa94d" ariaLabel="loading" />
+          <Oval height="100" width="100" color="#4fa94d" ariaLabel="loading" />
         </div>
       )}
 
+
       {/* Modal de Confirmación */}
       <Modal
-        isOpen={isSubmitted}
-        onRequestClose={closeConfirmationModal}
-        contentLabel="Confirmation Modal"
-        className="bg-white p-6 rounded shadow-md text-center max-w-sm mx-auto"
-        overlayClassName="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center"
-      >
-        <h2 className="text-xl font-semibold mb-4" style={{ color: '#001858' }}>¡Reporte Enviado!</h2>
-        <p className="mb-6">El reporte se ha enviado exitosamente.</p>
-        <button
-          onClick={closeConfirmationModal}
-          className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+          isOpen={isSubmitted}
+          onRequestClose={closeConfirmationModal}
+          contentLabel="Confirmation Modal"
+          className="bg-white p-6 rounded shadow-md text-center max-w-sm mx-auto"
+          overlayClassName="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center"
         >
-          Cerrar
-        </button>
+          <h2 className="text-xl font-semibold mb-4" style={{ color: isError ? '#FF0000' : '#28A745' }}>
+            {isError ? 'Error!' : 'Report Sent!'}
+          </h2>
+          <p className="mb-6">
+            {isError ? 'There was an issue with the emails.' : 'The report has been sent successfully.'}
+          </p>
+          <button
+            onClick={closeConfirmationModal}
+            className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+          >
+            Close
+          </button>
       </Modal>
+
     </div>
   );
 };

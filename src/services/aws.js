@@ -4,7 +4,8 @@ export async function sendReport(formData, mensaje) {
   try {
     // Definir el objeto con los parámetros que espera la función Lambda
     const requestBody = {
-      to: "andre.zambrano.cueva@gmail.com",
+      from: formData.from,
+      to: formData.recipient,
       subject: formData.subject,
       student: formData.studentName,
       mensaje: mensaje, // Incluyendo el mensaje HTML completo
