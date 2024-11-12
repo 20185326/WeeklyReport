@@ -267,7 +267,6 @@ const ReportForm = () => {
         </div>
       )}
 
-
       {/* Modal de Confirmación */}
       <Modal
           isOpen={isSubmitted}

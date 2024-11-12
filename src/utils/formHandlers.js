@@ -50,8 +50,8 @@ export const handleSubmit = async (formData) => {
     <body style="font-family: Arial, sans-serif; color: #333; line-height: 1.6; margin: 0; padding: 0;">
       <div style="width: 95%; max-width: 750px; margin: auto; border: 1px solid #ddd; padding: 20px; background-color: #f9f9f9; border-radius: 8px;">
         <div style="text-align: center; margin-bottom: 20px; background-color: #363661; border-radius: 5px;">
-          <img src="https://drive.google.com/uc?export=view&id=1FQEesRZV2NsM4DAiqmPIQWYrdSySCBHv" alt="KPAA Logo" style="max-width: 200px; height: auto;">
-        </div>
+          <img src="cid:kpaa_logo" alt="KPAA Logo" style="max-width: 200px; height: auto;">
+        </div>  
 
         <h2 style="color: #363661;">Dear ${family}</h2>
         <p>Please find below the weekly report (${week} - ${date}) for ${studentName}. Should you have any questions or concerns, please let us know at ${from} Thank you and have a blessed weekend.</p>
