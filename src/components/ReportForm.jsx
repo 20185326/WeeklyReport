@@ -119,7 +119,7 @@ const ReportForm = () => {
             value={formData.from} 
             onChange={handleFormChange} 
             className="w-full" 
-            placeholder="e.g., user.name@keypoint.academy.com" 
+            placeholder="e.g., user.name@keypointschools.com" 
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />  
           <FormInput 
