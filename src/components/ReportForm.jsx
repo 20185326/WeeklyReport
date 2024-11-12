@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import FormInput from './FormInput';
 import DynamicSection from './DynamicSection';
 import { addRow, handleChange, handleDynamicChange, handleSubmit } from '../utils/formHandlers';
-import { Oval } from 'react-loader-spinner'; // Componente de carga
-import Modal from 'react-modal'; // Modal de confirmación
+import { Oval } from 'react-loader-spinner';
+import Modal from 'react-modal';
 
-Modal.setAppElement('#root'); // Necesario para accesibilidad de react-modal
+Modal.setAppElement('#root');
 
 const ReportForm = () => {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     from: '',
     recipient: '',
     family: '',
@@ -21,12 +21,21 @@ const ReportForm = () => {
     kpaPride: [],
     accommodations: [],
     comments: '',
+  };
+
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem('reportFormData');
+    return savedData ? JSON.parse(savedData) : initialFormData;
   });
 
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);  
   const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('reportFormData', JSON.stringify(formData));
+  }, [formData]);
 
   const handleFormChange = (e) => {
     handleChange(e, formData, setFormData);
@@ -52,20 +61,18 @@ const ReportForm = () => {
     const response = await handleSubmit(formData);
     setIsLoading(false);
   
-    // Verifica si response es un objeto válido y tiene statusCode
     if (response && response.statusCode === 200) {
       setIsError(false);
       setIsSubmitted(true);
+      localStorage.removeItem('reportFormData'); // Borra la caché al enviar el formulario
     } else {
       setIsError(true);
       setIsSubmitted(true);
     }
   };
-  
-
 
   const closeConfirmationModal = () => {
-    setIsSubmitted(false); // Cerrar el modal de confirmación
+    setIsSubmitted(false);
   };
 
   const validateForm = () => {
@@ -97,7 +104,6 @@ const ReportForm = () => {
   useEffect(() => {
     validateForm();
   }, [formData]);
-
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4" style={{ backgroundColor: '#E0E0E0' }}>
       <form className="bg-white shadow-lg rounded-lg p-8 w-3/5 space-y-6" style={{ border: '1px solid #D1D1D1' }}>
@@ -164,9 +170,7 @@ const ReportForm = () => {
             value={formData.week}
             onChange={handleFormChange} 
             className="w-full" 
-            options={['week 1', 'week 2', 'week 3', 'week 4', 'week 5',
-              'week 6', 'week 7', 'week 8', 'week 9', 'week 10', 'week 11',
-              'week 12','week 13','week 14','week 15','week 16','week 17']} // Add your options here
+            placeholder="e.g., Week 6" 
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />
           <FormInput 
