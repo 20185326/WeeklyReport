@@ -69,6 +69,7 @@ const ReportForm = () => {
       setIsError(true);
       setIsSubmitted(true);
     }
+    localStorage.setItem('reportFormData', JSON.stringify(formData));
   };
 
   const closeConfirmationModal = () => {
