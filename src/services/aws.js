@@ -19,7 +19,7 @@ export async function sendReport(formData, mensaje) {
 
     // Realizar la solicitud POST a Lambda usando axios
     const response = await axios.post(
-      "https://fcz3yiiezk.execute-api.us-east-1.amazonaws.com/Centrum/tes2",
+      "https://23pg3d1bg8.execute-api.us-east-1.amazonaws.com/KPA-Services/WeeklyReport",
       requestBody,
       { headers }
     );
