@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import FormInput from './FormInput';
-import DynamicSection from './DynamicSection';
-import { addRow, handleChange, handleDynamicChange, handleSubmit } from '../utils/formHandlers';
+import FormInput from '../../components/FormInput';
+import DynamicSection from '../../components/DynamicSection';
+import { addRow, handleChange, handleDynamicChange, handleSubmit } from '../../utils/formHandlers';
 import { Oval } from 'react-loader-spinner';
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-const ReportForm = () => {
+const ViewReportForm = () => {
   const initialFormData = {
     from: '',
     recipient: '',
@@ -106,8 +106,8 @@ const ReportForm = () => {
     validateForm();
   }, [formData]);
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4" style={{ backgroundColor: '#E0E0E0' }}>
-      <form className="bg-white shadow-lg rounded-lg p-8 w-3/5 space-y-6" style={{ border: '1px solid #D1D1D1' }}>
+    <div >
+      <form className="bg-white shadow-lg rounded-lg p-8 w-5/5 space-y-6" style={{ border: '1px solid #D1D1D1' }}>
         <h2 className="text-2xl font-bold text-center mb-4" style={{ color: '#001858' }}>Weekly Report Form</h2>
 
         {/* Compact Fields */}
@@ -298,4 +298,4 @@ const ReportForm = () => {
   );
 };
 
-export default ReportForm;
+export default ViewReportForm;
