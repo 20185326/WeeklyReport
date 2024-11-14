@@ -176,7 +176,7 @@ export default function ViewToddler() {
             height={60}
           />
         </Box>
-        <h2 className="text-2xl font-bold text-center mb-4" style={{ color: '#001858' }}>Weekly Report Form</h2>
+        <h2 className="text-2xl font-bold text-center mb-4" style={{ color: '#001858' }}>Progress Report Generator</h2>
 
         <Typography variant="body1" gutterBottom align="center" sx={{ mb: 3 }}>
           Upload yout student roster and download all their report cards in a convenient ZIP file
