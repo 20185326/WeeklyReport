@@ -35,7 +35,7 @@ export default function Layout() {
           } transition-all duration-300 flex flex-col fixed h-screen bg-[#8B0000]`}
         >
           <div className="h-24 bg-[#002D74] flex items-center justify-between px-4">
-            {!isCollapsed && <div className="text-white font-bold text-xl"><img src="kpaa_logo.png"/></div>}
+            {!isCollapsed && <div className="text-white font-bold text-xl"><img src="https://cloudpot2.s3.us-east-1.amazonaws.com/kpaa_logo.png"/></div>}
             <button 
               onClick={toggleNav} 
               className="text-white p-2 hover:bg-[#002D74] rounded-lg transition-colors"

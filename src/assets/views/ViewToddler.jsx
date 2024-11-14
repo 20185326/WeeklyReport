@@ -170,7 +170,7 @@ export default function ViewToddler() {
       >
         <Box sx={{ position: 'relative', mb: 2 }}>
           <img
-            src="KeyPointIcon.png"
+            src="https://cloudpot2.s3.us-east-1.amazonaws.com/KeyPointIcon.png"
             alt="Key Point Academy Logo"
             width={200}
             height={60}
