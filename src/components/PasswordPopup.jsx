@@ -26,7 +26,7 @@ const PasswordPopup = ({ onPasswordSubmit }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
       <div className="bg-white p-8 rounded-lg shadow-lg w-96">
 
-        <h2 className="text-2xl font-semibold mb-4">Por favor, ingresa la contraseña</h2>
+        <h2 className="text-2xl font-semibold mb-4">Please, enter the password</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
@@ -42,18 +42,18 @@ const PasswordPopup = ({ onPasswordSubmit }) => {
             type="submit"
             className="w-full py-2 mb-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Ingresar
+            Join
           </button>
           <button
             onClick={handleClose}
             className="w-full py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Cancelar
+            Cancel
           </button>
         </div>
 
         </form>
-        {error && <p className="mt-2 text-red-500 text-sm">Contraseña incorrecta. Inténtalo de nuevo.</p>}
+        {error && <p className="mt-2 text-red-500 text-sm">Wrong password. Try again please.</p>}
       </div>
     </div>
   );

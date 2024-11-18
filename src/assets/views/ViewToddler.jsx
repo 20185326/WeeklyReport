@@ -116,14 +116,14 @@ export default function ViewToddler() {
           );
 
           if (!response.ok) {
-            throw new Error('Error en la respuesta del servidor');
+            throw new Error('Error in the server response');
           }
 
           const data = await response.json();
           setDownloadUrl(JSON.parse(data.body).downloadUrl);
         } catch (err) {
           console.error('Error:', err);
-          setError('Error al procesar el archivo ZIP en el servidor');
+          setError('Error processing the ZIP file on the server');
         } finally {
           setIsLoading(false);
         }
@@ -132,7 +132,7 @@ export default function ViewToddler() {
       reader.readAsDataURL(zipBlob);
     } catch (err) {
       console.error('Error:', err);
-      setError('Error al procesar el archivo CSV y las imágenes');
+      setError('Error processing the CSV file and images');
       setIsLoading(false);
     }
   };
