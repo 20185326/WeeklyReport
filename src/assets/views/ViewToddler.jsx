@@ -145,7 +145,12 @@ export default function ViewToddler() {
       setError(null);
     }
   };
-
+  const gradeLinks = [
+    ['Toddler', 'https://docs.google.com/spreadsheets/d/1GnJHgU2PwNH_WC-_eSErKQrI0LEbi3db/edit?usp=sharing&ouid=109106641591153354661&rtpof=true&sd=true'], // Enlace vacío para Toddler
+    ['2K', 'https://docs.google.com/spreadsheets/d/1ptk9PBnfdoujQF0f0-eeolQ9MiiHSFgdk0DrT5aKj30/edit?usp=sharing'],
+    ['3K', 'https://docs.google.com/spreadsheets/d/1nC_cK4nVeQOILF1P7lH-9oBQqdH4s58I6cnd5KWwlrw/edit?usp=sharing'],
+    ['4K', 'https://docs.google.com/spreadsheets/d/14JpubcbDAjAkc4H8Wa6vWaN7SZ2cCTbKwG17cjyxZio/edit?usp=sharing']
+  ];
   return (
     <div>
     {!isUnlocked ? (
@@ -179,31 +184,49 @@ export default function ViewToddler() {
         <h2 className="text-2xl font-bold text-center mb-4" style={{ color: '#001858' }}>Progress Report Generator</h2>
 
         <Typography variant="body1" gutterBottom align="center" sx={{ mb: 3 }}>
-          Upload yout student roster and download all their report cards in a convenient ZIP file
+          Upload your student roster and download all their report cards in a convenient ZIP file
         </Typography>
-        {['Toddler','2K', '3K', '4K'].map((grade) => (
-          <Box key={grade} sx={{ width: '100%', mb: 2 }}>
-            <input
-              accept=".csv, .xls, .xlsx"
-              style={{ display: 'none' }}
-              id={`raised-button-file-${grade}`}
-              type="file"
-              onChange={(e) => handleFileUpload(e, grade)}
-            />
-            <label htmlFor={`raised-button-file-${grade}`}>
-              <Button
-                variant="contained"
-                color="success"
-                component="span"
-                disabled={isLoading || !!downloadUrl}
-                startIcon={isLoading ? <CircularProgress size={24} /> : <Upload />}
-                fullWidth
-              >
-                {isLoading ? 'Procesando...' : `Upload Excel File |  ${grade}`}
-              </Button>
-            </label>
-          </Box>
-        ))}
+        {gradeLinks.map(([grade, link]) => (
+          
+  <Box key={grade} sx={{ width: '100%', mb: 2 }}>
+    <input
+      accept=".csv, .xls, .xlsx"
+      style={{ display: 'none' }}
+      id={`raised-button-file-${grade}`}
+      type="file"
+      onChange={(e) => handleFileUpload(e, grade)}
+    />
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+      <label
+        htmlFor={`raised-button-file-${grade}`}
+        style={{ flex: 1 }} // El contenedor del botón ocupa todo el espacio posible
+      >
+        <Button
+          variant="contained"
+          color="success"
+          component="span"
+          disabled={isLoading || !!downloadUrl}
+          startIcon={isLoading ? <CircularProgress size={24} /> : <Upload />}
+          style={{ width: '100%' }} // El botón se expande al 100% del contenedor
+        >
+          {isLoading ? 'Procesando...' : `Upload Excel File | ${grade}`}
+        </Button>
+      </label>
+
+      {/* Botón adicional con tamaño fijo */}
+      <Button
+        style={{ flex: '0 0 auto', whiteSpace: 'nowrap' }}
+        component="a"
+        href={link} // Cambia esta URL por la de tu plantilla
+        target="_blank" // Abre el enlace en una nueva pestaña
+        rel="noopener noreferrer" // Mejora de seguridad al abrir en una nueva pestaña
+      >
+        Go to the template
+      </Button>
+    </div>
+  </Box>
+))}
+
         <Button
           variant="contained"
           color="secondary"
