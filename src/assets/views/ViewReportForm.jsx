@@ -193,11 +193,14 @@ const ViewReportForm = () => {
               'Toddler', 
               'Pre-Kindergarten', 
               'Kindergarten', 
-              '1st Grade', 
-              '2nd Grade', 
-              '3rd Grade', 
-              '4th Grade', 
-              '5th Grade'
+              '1st Grade',
+              '2nd Grade',
+              '3rd Grade',
+              '4th Grade',
+              '5th Grade',
+              '6th Grade',
+              '7th Grade',
+              '8th Grade'              
             ]}
             style={{ borderColor: '#D1D1D1', backgroundColor: '#FFFFFF' }}
           />
