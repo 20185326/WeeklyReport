@@ -85,8 +85,12 @@ export default function ViewToddler() {
     try {
       const zip = new JSZip();
       zip.file(fileName, file);
-
-      const images = ['1.png', '2.png', '3.png'];
+      if(grade!="DA"){
+        var images = ['1.png', '2.png', '3.png'];
+      }
+      else {
+        var images = ['DA.png'];
+      }
       for (const imageName of images) {
         const imageResponse = await fetch(`/${grade}/${imageName}`);
         if (!imageResponse.ok) {
@@ -94,6 +98,7 @@ export default function ViewToddler() {
         }
         const imageBlob = await imageResponse.blob();
         zip.file(imageName, imageBlob);
+
       }
 
       const zipBlob = await zip.generateAsync({ type: 'blob' });
@@ -149,7 +154,9 @@ export default function ViewToddler() {
     ['Toddler', 'https://docs.google.com/spreadsheets/d/1GnJHgU2PwNH_WC-_eSErKQrI0LEbi3db/edit?usp=sharing&ouid=109106641591153354661&rtpof=true&sd=true'], // Enlace vacío para Toddler
     ['2K', 'https://docs.google.com/spreadsheets/d/1ptk9PBnfdoujQF0f0-eeolQ9MiiHSFgdk0DrT5aKj30/edit?usp=sharing'],
     ['3K', 'https://docs.google.com/spreadsheets/d/1nC_cK4nVeQOILF1P7lH-9oBQqdH4s58I6cnd5KWwlrw/edit?usp=sharing'],
-    ['4K', 'https://docs.google.com/spreadsheets/d/14JpubcbDAjAkc4H8Wa6vWaN7SZ2cCTbKwG17cjyxZio/edit?usp=sharing']
+    ['4K', 'https://docs.google.com/spreadsheets/d/14JpubcbDAjAkc4H8Wa6vWaN7SZ2cCTbKwG17cjyxZio/edit?usp=sharing'],
+    ['DA', 'https://docs.google.com/spreadsheets/d/1k8O7Y8DTItYE5UCUdMgHRRWPJhcMYNyn6cccl_e80Nk/edit?usp=sharing'], // Enlace vacío para Toddler
+
   ];
   return (
     <div>
@@ -209,7 +216,7 @@ export default function ViewToddler() {
           startIcon={isLoading ? <CircularProgress size={24} /> : <Upload />}
           style={{ width: '100%' }} // El botón se expande al 100% del contenedor
         >
-          {isLoading ? 'Procesando...' : `Upload Excel File | ${grade}`}
+          {isLoading ? 'Procesando...' : `Upload Excel File | ${grade === 'DA' ? 'Developmental Assessment' : grade}`}
         </Button>
       </label>
 

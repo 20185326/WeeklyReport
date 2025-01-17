@@ -6,7 +6,7 @@ import { NavItem } from './NavItem'
 const menuOptions = [
   { icon: RetiroCursosIcon, label: "Weekly Reports", to: "/ViewReportForm" },
   { icon: DocumentIcon, label: "Progress Report", to: "/ViewToddler" },
-  { icon: DashboardIcon, label: "Other", to: "/ViewReportForm" },
+//  { icon: DashboardIcon, label: "Other", to: "/ViewReportForm" },
 ]
 
 export default function Layout() {
